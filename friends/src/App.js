@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { handleLogin, handleGetFriends } from "./actions/index";
+import { handleLogin } from "./actions/index";
+import FriendsList from "./components/FriendsList";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
 
 class App extends Component {
-  componentDidMount = () => {
-    this.props.handleGetFriends(this.props.token);
-  };
-
   render() {
     return (
       <Router>
@@ -20,19 +17,15 @@ class App extends Component {
             <LoginForm {...props} handleLogin={this.props.handleLogin} />
           )}
         />
+        <FriendsList />
       </Router>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  friends: state.friends,
-  isLoading: state.isLoading,
-  token: state.token,
-  error: state.error
-});
+const mapStateToProps = state => ({});
 
 export default connect(
   mapStateToProps,
-  { handleLogin, handleGetFriends }
+  { handleLogin }
 )(App);
