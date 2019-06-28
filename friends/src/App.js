@@ -17,13 +17,15 @@ class App extends Component {
             <LoginForm {...props} handleLogin={this.props.handleLogin} />
           )}
         />
-        <FriendsList />
+        {this.props.token && <FriendsList />}
       </Router>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  token: state.loginReducer.token
+});
 
 export default connect(
   mapStateToProps,

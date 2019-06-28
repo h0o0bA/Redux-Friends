@@ -23,7 +23,8 @@ class FriendsList extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    friends: state.friendReducer.friends
+    friends: state.friendReducer.friends,
+    token: state.loginReducer.token
   };
 };
 
