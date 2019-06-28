@@ -1,4 +1,11 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILURE } from "../actions";
+import {
+  FRIENDS_FAILURE,
+  FRIENDS_START,
+  FRIENDS_SUCCESS,
+  LOGIN_FAILURE,
+  LOGIN_START,
+  LOGIN_SUCCESS
+} from "../actions";
 
 const initialState = {
   friends: [],
@@ -21,6 +28,23 @@ export const rootReducer = (state = initialState, action) => {
         token: action.payload
       };
     case LOGIN_FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload
+      };
+    case FRIENDS_START:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case FRIENDS_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        friends: action.payload
+      };
+    case FRIENDS_FAILURE:
       return {
         ...state,
         isLoading: false,
