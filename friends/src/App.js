@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { handleLogin } from "./actions/index";
+import { handleLogin, handleLogout } from "./actions/index";
 import FriendsList from "./components/FriendsList";
 import LoginForm from "./components/LoginForm";
 import Navbar from "./components/Navbar";
@@ -14,7 +14,11 @@ class App extends Component {
         <Route
           path="/"
           render={props => (
-            <LoginForm {...props} handleLogin={this.props.handleLogin} />
+            <LoginForm
+              {...props}
+              handleLogin={this.props.handleLogin}
+              handleLogout={this.props.handleLogout}
+            />
           )}
         />
         {this.props.token && <FriendsList />}
@@ -29,5 +33,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { handleLogin }
+  { handleLogin, handleLogout }
 )(App);
