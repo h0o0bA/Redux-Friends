@@ -50,7 +50,7 @@ export const handleAddFriend = (token, friend) => dispatch => {
   console.log(token);
   axios
     .post(`${baseUrl}/api/friends`, friend, {
-      headers: { authorization: token }
+      headers: { Authorization: localStorage.getItem("token") }
     })
     .then(res => dispatch({ type: ADD_SUCCESS, payload: res.data }))
     .catch(err => dispatch({ type: ADD_FAILURE, payload: err }));
