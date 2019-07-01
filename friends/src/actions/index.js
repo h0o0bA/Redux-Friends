@@ -17,18 +17,32 @@ const baseUrl = "http://localhost:5000";
 
 export const handleLogin = user => dispatch => {
   dispatch({ type: LOGIN_START });
-  axios
+  return axios
     .post(`${baseUrl}/api/login`, user)
-    .then(res => dispatch({ type: LOGIN_SUCCESS, payload: res.data.payload }))
-    .catch(err => dispatch({ type: LOGIN_FAILURE, payload: err }));
+    .then(res => {
+      localStorage.setItem("token", res.data.payload);
+      dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      dispatch({ type: LOGIN_FAILURE, payload: err.response });
+    });
 };
 
-export const handleGetFriends = token => dispatch => {
+export const handleGetFriends = () => dispatch => {
   dispatch({ type: FRIENDS_START });
   axios
-    .get(`${baseUrl}/api/friends`, { headers: { authorization: token } })
-    .then(res => dispatch({ type: FRIENDS_SUCCESS, payload: res.data }))
-    .catch(err => dispatch({ type: FRIENDS_FAILURE, payload: err }));
+    .get(`${baseUrl}/api/friends`, {
+      headers: { Authorization: localStorage.getItem("token") }
+    })
+    .then(res => {
+      dispatch({ type: FRIENDS_SUCCESS, payload: res.data });
+    })
+    .catch(err => {
+      if (err.response.status === 403) {
+        localStorage.removeItem("token");
+      }
+      dispatch({ type: FRIENDS_FAILURE, payload: err.response });
+    });
 };
 
 export const handleAddFriend = (token, friend) => dispatch => {

@@ -1,9 +1,11 @@
 import { LOGIN_FAILURE, LOGIN_START, LOGIN_SUCCESS, LOGOUT } from "../actions";
 
 const initialState = {
-  isLoading: false,
-  token: "",
-  error: null
+  friends: [],
+  error: "",
+  errorStatusCode: null,
+  fetchingData: false,
+  isLoggingIn: false
 };
 
 export const loginReducer = (state = initialState, action) => {
@@ -11,19 +13,19 @@ export const loginReducer = (state = initialState, action) => {
     case LOGIN_START:
       return {
         ...state,
-        isLoading: true
+        isLoggingIn: true
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        isLoggingIn: true,
         token: action.payload
       };
     case LOGIN_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        error: action.payload
+        isLoggingIn: false,
+        errorStatusCode: action.payload.status
       };
     case LOGOUT:
       return {

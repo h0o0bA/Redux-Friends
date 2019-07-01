@@ -17,19 +17,20 @@ export const friendReducer = (state = initialState, action) => {
     case FRIENDS_START:
       return {
         ...state,
-        isLoading: true
+        error: "",
+        fetchingData: true
       };
     case FRIENDS_SUCCESS:
       return {
         ...state,
-        isLoading: false,
+        error: "",
+        fetchingData: false,
         friends: action.payload
       };
     case FRIENDS_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        error: action.payload
+        errorStatusCode: action.payload.status
       };
     case ADD_SUCCESS:
       return {
